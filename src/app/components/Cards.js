@@ -1,4 +1,7 @@
+import { useSelector } from "react-redux";
+
 const Cards = () => {
+  const reduxData=useSelector((state)=>state.table.value);
   return (
     <aside className="m-12">
       <div className="max-w-md  px-8 py-4 bg-white rounded-lg shadow-md dark:bg-gray-800">
@@ -25,7 +28,7 @@ const Cards = () => {
             Total Capsules
           </a>
           <p className="mt-2 text-gray-600 dark:text-gray-300">
-           19
+           {reduxData?.length}
             
           </p>
         </div>

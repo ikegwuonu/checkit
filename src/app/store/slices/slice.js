@@ -3,7 +3,7 @@ import { createSlice, original } from '@reduxjs/toolkit';
 
 const table = createSlice({
   name: 'table',
-  initialState: { value: null,status:true }, // initial state for table data
+  initialState: { value: null,status:false }, // initial state for table data
   reducers: {
     setData: (state, action) => {
       state.value = action.payload;
@@ -21,9 +21,12 @@ const table = createSlice({
     add:(state,action)=>{
         const addInfo=action.payload;
         state.value.push({capsule_serial:addInfo[0],status:addInfo[1],type:addInfo[2],original_launch: Date()});
-    }
+    },
+    deleted:(state,action)=>{
+      state.value=state.value.filter((item)=>item!=action.payload);
+    },
   },
 });
 
-export const { setData,edit,add } = table.actions;
+export const { setData,edit,add,deleted} = table.actions;
 export default table;
