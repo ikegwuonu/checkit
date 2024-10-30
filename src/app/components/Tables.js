@@ -21,7 +21,7 @@ const [type, setType] = useState("");
 const [id, setId] = useState("");
 const [addOpen, setAddOpen] = useState(false);
 const [tableData,setTableData]=useState(reduxData);
-
+const [loading,setLoading]=useState(true);
 
 
  useEffect(() => {
@@ -29,10 +29,10 @@ const [tableData,setTableData]=useState(reduxData);
       try {
         const response = await fetch('https://api.spacexdata.com/v3/capsules/');
         const data = await response.json();
-        console.log(data);
+        //console.log(data);
         setTableData(data.slice(0,5));
         dispatch(setData(data)); // Save data to Redux store
-        
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -77,14 +77,17 @@ const search = (params) => {
 
 const deleteCapsule=(params)=>{
     dispatch(deleted(params));
+    
+    setTableData(reduxData.slice((currentPage - 1) * 5, currentPage * 5));
+    alert(params  + ' has been deleted');
 };
   return (
-    <section>
-        {status? (
-            <p>loading...</p>
+    <section className=' p-4 md:p-0'>
+        {loading? (
+            <p className='text-center text-gray-600'>loading...</p>
         ):(
             <>
-            <aside className="container  mx-auto">
+            <aside className="overflow-y-hidden container  mx-auto">
          {isModalOpen && <div className='z-20 fixed top-0 left-0  w-screen h-screen bg-gray-400 bg-opacity-80  flex justify-center'><Modal id={id} setId={setId} myStatus={myStatus} setMyStatus={setMyStatus} type={type} setType={setType} setModalOpen={setModalOpen} setTableData={setTableData} currentPage={currentPage}/></div>}
          {addOpen && <div className='z-20  fixed top-0 left-0  w-screen h-screen bg-gray-200 bg-opacity-80 flex justify-center'><Add setAddOpen={setAddOpen} setTableData={setTableData} currentPage={currentPage}/></div>}
      
@@ -112,8 +115,10 @@ const deleteCapsule=(params)=>{
     </div>
 
     <div className="mt-6 md:flex md:items-center md:justify-between">
+    <div className='flex items-center gap-6'>
     <Filter name='status' one="active" two='unknowm' three='retired' setTableData={setTableData}/>
     <Filter name='type' one="Dragon 1.0" two='Dragon 1.1' three='Dragon 2.0' setTableData={setTableData}/>
+    </div>
         
         
 
@@ -129,10 +134,10 @@ const deleteCapsule=(params)=>{
     </div>
 
     <div className="flex flex-col mt-6">
-        <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div className=" overflow-x-auto  lg:-mx-8">
             <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                 <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
-                <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                <table className="rounded-sm min-w-full divide-y divide-gray-200 dark:divide-gray-700 ">
                         <thead className="bg-gray-50 dark:bg-gray-800">
                             <tr>
                                 <th scope="col" className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -148,12 +153,12 @@ const deleteCapsule=(params)=>{
                                 </th>
 
                                 <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                    Original launch date
+                                     Launch date
                                 </th>
 
-                                <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">type</th>
+                                <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Type</th>
 
-                                <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">No of missions </th>
+                                <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Missions </th>
 
                                   <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                     Edit
@@ -184,7 +189,7 @@ const deleteCapsule=(params)=>{
                                 </td>
                                 <td className="px-4 py-4 text-sm whitespace-nowrap">
                                     <div>
-                                        <h4 className="text-gray-700 dark:text-gray-200">{item.original_launch}</h4>
+                                        <h4 className="text-gray-700 dark:text-gray-200">{new Date(item.original_launch).toDateString()}</h4>
                                         
                                     </div>
                                 </td>
@@ -197,17 +202,17 @@ const deleteCapsule=(params)=>{
 
                                 <td className="px-2 py-4 text-sm whitespace-nowrap">
                                     
-                                      {item.missions.length}
+                                      {item.missions?.length}
                                     
                                 </td>
 
                                 <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                    <button onClick={()=>edit(item.capsule_serial,item.status,item.type)} className="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100">
+                                    <button onClick={()=>edit(item.capsule_serial,item.status,item.type)} className="px-3 py-3 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-blue-100">
                                         Edit
                                     </button>
                                 </td>
                                 <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                    <button onClick={()=>deleteCapsule(item.capsule_serial)} className="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100">
+                                    <button onClick={()=>deleteCapsule(item.capsule_serial)} className="px-3 py-3 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-red-300">
                                         Delete
                                     </button>
                                 </td>
@@ -222,7 +227,7 @@ const deleteCapsule=(params)=>{
                     </table>
                    
                 </div>
-                <div className="items-center my-12  hidden md:flex gap-x-3">
+                <div className="items-center my-12  hidden sm:flex gap-x-3">
                 
                 <p onClick={prev}  className="cursor-pointer flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md sm:w-auto gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 rtl:-scale-x-100">

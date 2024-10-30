@@ -23,7 +23,7 @@ const table = createSlice({
         state.value.push({capsule_serial:addInfo[0],status:addInfo[1],type:addInfo[2],original_launch: Date()});
     },
     deleted:(state,action)=>{
-      state.value=state.value.filter((item)=>item!=action.payload);
+      state.value=state.value.filter((item)=>item.capsule_serial!=action.payload);
     },
   },
 });

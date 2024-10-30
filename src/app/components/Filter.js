@@ -20,10 +20,10 @@ const Filter = ({name,one,two,three,setTableData}) => {
   <div className="inline-flex items-center overflow-hidden rounded-md border bg-white">
 
 
-    <button onClick={()=>setStatus((prev)=>!prev)} className="h-full p-2 text-gray-600 hover:bg-gray-50 hover:text-gray-700">
+    <button onClick={()=>setStatus((prev)=>!prev)} className="h-full p-2 flex items-center text-gray-600 hover:bg-gray-50 hover:text-gray-700">
     <p 
       href="#"
-      className="border-e px-4 py-2 text-sm/none text-gray-600 hover:bg-gray-50 hover:text-gray-700"
+      className="border-e  p-1 text-sm/none text-gray-600 hover:bg-gray-50 hover:text-gray-700"
     >
       {name}
     </p>
@@ -45,7 +45,7 @@ const Filter = ({name,one,two,three,setTableData}) => {
 
   {status && (
     <div
-    className="absolute end-0 z-10 mt-2 w-40 rounded-md border border-gray-100 bg-white shadow-lg"
+    className="absolute start-0 z-10 mt-2 w-40 rounded-md border border-gray-100 bg-white shadow-lg"
     role="menu"
   >
     <div className="p-2">

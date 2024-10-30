@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 const Cards = () => {
   const reduxData=useSelector((state)=>state.table.value);
   return (
-    <aside className="m-12">
+    <aside className="lg:m-12 sm:m-4 p-4 md:p-0">
       <div className="max-w-md  px-8 py-4 bg-white rounded-lg shadow-md dark:bg-gray-800">
         <div className="flex items-center justify-between">
           <span className="text-sm font-light text-gray-600 dark:text-gray-400">

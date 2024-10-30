@@ -13,7 +13,7 @@ export default function Home() {
   return (
     <Provider store={store}>
     <main className="flex w-full overflow-x-hidden">
-      <aside className=" flex flex-col items-center h-screen mt-4 px-4 border-r-2  border-r-gray-200">
+      <aside className=" hidden  md:flex flex-col items-center h-screen mt-4 px-4 border-r-2  border-r-gray-200">
        
         <Image src="document.svg" className="py-4" width={35} height={35} alt="icon"/>
         <Image src="calendat.svg" className="py-4" width={35} height={35} alt="icon"/>
@@ -24,7 +24,7 @@ export default function Home() {
         
         
       </aside>
-  <section className="w-full">
+  <section className="w-full ">
   <Navbar/>
   <Cards/>
   <Tables/>
