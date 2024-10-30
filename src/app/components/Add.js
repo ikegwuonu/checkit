@@ -71,7 +71,7 @@ const Add = ({ setAddOpen }) => {
                 <div className="mt-4 sm:flex sm:items-center sm:-mx-2">
                   <button
                     type="submit"
-                    className="w-full px-4 py-2 mt-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300"
+                    className="w-full px-4 py-2 mt-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gray-600 rounded-md hover:bg-gray-500 focus:outline-none focus:ring focus:ring-gray-300"
                   >
                     Add
                   </button>

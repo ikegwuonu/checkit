@@ -81,6 +81,12 @@ const deleteCapsule=(params)=>{
     setTableData(reduxData.slice((currentPage - 1) * 5, currentPage * 5));
     alert(params  + ' has been deleted');
 };
+const retired='bg-gray-300';
+const destroyed='bg-red-300';
+const active='bg-green-300'
+const statusColor={
+    active:'bg-green 300'
+};
   return (
     <section className=' p-4 md:p-0'>
         {loading? (
@@ -96,7 +102,7 @@ const deleteCapsule=(params)=>{
             <div className="flex items-center gap-x-3">
                 <h2 className="text-lg font-medium text-gray-800 dark:text-white">Capsules</h2>
 
-                <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400"> {reduxData?.length} capsules</span>
+                <span className="px-3 py-1 text-xs text-gray-600 bg-gray-100 rounded-full dark:bg-gray-800 dark:text-blue-400"> {reduxData?.length} capsules</span>
             </div>
 
         </div>
@@ -104,7 +110,7 @@ const deleteCapsule=(params)=>{
         <div className="flex items-center mt-4 gap-x-3">
             
 
-            <button onClick={()=>setAddOpen(true)} className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
+            <button onClick={()=>setAddOpen(true)} className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-gray-100 transition-colors duration-200 bg-gray-600 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-gray-300 dark:hover:bg-blue-500 dark:bg-blue-600">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
@@ -129,7 +135,7 @@ const deleteCapsule=(params)=>{
                 </svg>
             </span>
 
-            <input onChange={(e)=>search(e.target.value)} type="text" placeholder="Search capsule id" className="block w-full py-1.5 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"/>
+            <input onChange={(e)=>search(e.target.value)} type="text" placeholder="Search capsule id" className="block w-full py-1.5 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-gray-400 dark:focus:border-blue-300 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"/>
         </div>
     </div>
 
@@ -183,7 +189,11 @@ const deleteCapsule=(params)=>{
                                     </div>
                                 </td>
                                 <td className="px-12 py-4 text-sm font-medium whitespace-nowrap">
-                                    <div className="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
+                                    <div className={`${item.status==='active'?'bg-green-300 text-green-600':''}
+                                    ${item.status==='retired'?'bg-gray-300 text-gray-600':''}
+                                    ${item.status==='destroyed'?'bg-red-300 text-red-600':''}
+                                    ${item.status==='unknown'?'bg-orange-300 text-orange-600':''}
+                                    inline px-3 py-1 text-sm font-normal rounded-full gap-x-2  dark:bg-gray-800`}>
                                         {item.status}
                                     </div>
                                 </td>
@@ -239,10 +249,10 @@ const deleteCapsule=(params)=>{
                 </span>
             </p>
 
-            <p  onClick={()=>moveTo(1)} className={`cursor-pointer px-2 py-1 text-sm rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100 ${currentPage===1 &&' bg-blue-500 :text-gray-300'}`}>1</p>
-            <p  onClick={()=>moveTo(2)} className={`cursor-pointer px-2 py-1 text-sm rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100 ${currentPage===2 &&' bg-blue-500 :text-gray-300'}`}>2</p>
-            <p onClick={()=>moveTo(3)} className={`cursor-pointer px-2 py-1 text-sm rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100 ${currentPage===3 &&' bg-blue-500 :text-gray-300'}`}>3</p>
-            <p onClick={()=>moveTo(4)} className={`cursor-pointer px-2 py-1 text-sm rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100 ${currentPage===4 &&' bg-blue-500 :text-gray-300'}`}>4</p>
+            <p  onClick={()=>moveTo(1)} className={`cursor-pointer px-2 py-1 text-sm rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100 ${currentPage===1 &&' bg-gray-600 :text-gray-300'}`}>1</p>
+            <p  onClick={()=>moveTo(2)} className={`cursor-pointer px-2 py-1 text-sm rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100 ${currentPage===2 &&' bg-gray-600 :text-gray-100'}`}>2</p>
+            <p onClick={()=>moveTo(3)} className={`cursor-pointer px-2 py-1 text-sm rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100 ${currentPage===3 &&' bg-gray-600 :text-gray-100'}`}>3</p>
+            <p onClick={()=>moveTo(4)} className={`cursor-pointer px-2 py-1 text-sm rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100 ${currentPage===4 &&' bg-gray-500 :text-gray-100'}`}>4</p>
             <p onClick={next} className="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md sm:w-auto gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
                 <span>
                     Next
